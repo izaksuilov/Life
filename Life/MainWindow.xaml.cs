@@ -16,6 +16,7 @@ namespace Life
     public partial class MainWindow : Window
     {
         private static int X = 49, Y = 33;
+        private static int _rectWidth = 20, _rectHeight = 20;
         private Rectangle[,] _rectangles = new Rectangle[Y, X];
         private List<bool[,]> _prevValues = new List<bool[,]>();
         private SolidColorBrush _pressedBrush = new SolidColorBrush(Colors.Blue);
@@ -41,11 +42,58 @@ namespace Life
 
             Speed.ValueChanged += (sender, e) => _speed = Speed.Value;
 
+            Width.Text = X.ToString();
+            Height.Text = Y.ToString();
+
+            InitField();
+
+            Width.TextChanged += Width_TextChanged;
+            Height.TextChanged += Height_TextChanged;
+        }
+
+        private void Height_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if (int.TryParse(Height.Text, out int y))
+            {
+                if (y > 0 && y <= 50)
+                {
+                    ResetButton_Click(null, null);
+                    Y = y;
+                    InitField();
+                }
+            }
+        }
+
+        private void Width_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if (int.TryParse(Width.Text, out int x))
+            {
+                if (x > 0 && x <= 50)
+                {
+                    ResetButton_Click(null, null);
+                    X = x;
+                    InitField();
+                }
+            }
+        }
+
+        private void InitField()
+        {
+            InitSize();
+
+            Field.Children.Clear();
+            _rectangles = new Rectangle[Y, X];
+
             for (int i = 0; i < Y; i++)
             {
                 for (int j = 0; j < X; j++)
                 {
-                    Rectangle button = new Rectangle();
+                    Rectangle button = new Rectangle()
+                    {
+                        Fill = _unpressedBrush,
+                        Width = _rectWidth,
+                        Height = _rectHeight
+                    };
 
                     button.MouseMove += (sender, e) =>
                     {
@@ -58,6 +106,12 @@ namespace Life
                     _rectangles[i, j] = button;
                 }
             }
+        }
+
+        private void InitSize()
+        {
+            Field.Width = X * _rectWidth;
+            Field.Height = Y * _rectHeight;
         }
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
@@ -94,7 +148,7 @@ namespace Life
                         if (_rectangles[i, j].Fill == _pressedBrush)//если была жива
                         {
                             int alive = GetActiveNeighbours(i, j);
-                            prevValue[i, j] = !(alive < 2 || alive > 3);
+                            prevValue[i, j] = (alive == 2 || alive == 3);
                         }
                         else//если была мертва
                             prevValue[i, j] = GetActiveNeighbours(i, j) == 3;
@@ -188,12 +242,16 @@ namespace Life
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
+            StartButton.IsChecked = false;
             try
             {
                 for (int i = 0; i < Y; i++)
                 {
                     for (int j = 0; j < X; j++)
-                        _rectangles[i, j].Fill = _unpressedBrush;
+                    {
+                        if (_rectangles[i, j] != null)
+                            _rectangles[i, j].Fill = _unpressedBrush;
+                    }
                 }
                 _gen = 0;
                 _prevValues = new List<bool[,]>();

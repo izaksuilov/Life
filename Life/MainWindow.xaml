@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Life"
         mc:Ignorable="d"
-        Width="986" Height="758"
-        ResizeMode="NoResize"
+        Width="1100" Height="800"
         Title="Игра жизнь">
   <Window.Resources>
     <Style TargetType="Rectangle">
@@ -27,7 +26,7 @@
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
     <Grid Name="Buttons"
-          Grid.Row="0"
+          Grid.Row="0" HorizontalAlignment="Center"
           Margin="10">
       <Grid.RowDefinitions>
         <RowDefinition Height="*"/>
@@ -59,6 +58,8 @@
                 Click="PrevButton_Click"
                 Content="Предыдущее поколение"/>
 
+        <TextBlock Text="Ширина: " Margin="10,0,0,0"/>
+        <TextBox x:Name="Width" MinWidth="30" VerticalAlignment="Top"/>
       </StackPanel>
       <StackPanel Grid.Row="1"
                   Margin="0,5,0,0"
@@ -72,9 +73,13 @@
                    Margin="124,0,0,0"
                    ClipToBounds="True" Text="Поколение: 0"
                    TextAlignment="Center"/>
+        <TextBlock Text="Высота: " Margin="20,0,7,0"/>
+        <TextBox x:Name="Height" MinWidth="30" VerticalAlignment="Top"/>
       </StackPanel>
     </Grid>
 
-    <WrapPanel Name="Field" Grid.Row="1"/>
+    <WrapPanel Name="Field"
+               Grid.Row="1"
+               Width="980" Height="662"/>
   </Grid>
 </Window>
