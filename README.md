@@ -48,8 +48,7 @@
 * Запустить;
 * Вернуться к предыдущему поколению;
 * Перейти к следующему поколению;
+* Изменить ширину и высоту поля;
 * Изменить состояние клеток.
 
-![Life_Example](https://user-images.githubusercontent.com/60542253/216816282-d50251f2-b136-4507-85aa-8cf69b3ae1ac.gif)
-
-
+![Life](https://user-images.githubusercontent.com/60542253/216820119-65a163e6-0bd0-4110-b605-4f65f8b3762e.gif)
