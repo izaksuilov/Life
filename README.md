@@ -41,3 +41,5 @@
 * Перейти к следующему поколению;
 * Изменить состояние клеток.
 
+![Life_Example](https://user-images.githubusercontent.com/60542253/216816282-d50251f2-b136-4507-85aa-8cf69b3ae1ac.gif)
+
